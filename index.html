@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhumik | Authentic Indian Kitchen</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231A1410'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23D4A017' stroke-width='2'/%3E%3Cpath d='M50 20 C 60 35, 60 45, 50 55 C 40 45, 40 35, 50 20 Z' fill='%23C2451D'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%23D4A017'/%3E%3C/svg%3E" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#1a1410;
+    --charcoal-2:#241c16;
+    --cream:#f3e9d8;
+    --gold:#d4a017;
+    --gold-soft:#e8c766;
+    --brick:#c2451d;
+    --sage:#6b7a52;
+    --line:rgba(243,233,216,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--charcoal);
+    color:var(--cream);
+    font-family:'Work Sans',sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ::selection{background:var(--brick);color:var(--cream);}
+
+  /* reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 6vw;
+    background:linear-gradient(to bottom, rgba(26,20,16,0.9), transparent);
+    transition:background 0.4s ease, padding 0.4s ease;
+  }
+  header.scrolled{
+    background:rgba(26,20,16,0.92);
+    backdrop-filter:blur(10px);
+    padding:14px 6vw;
+    border-bottom:1px solid var(--line);
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-family:'Fraunces',serif;font-size:1.5rem;font-weight:600;
+    letter-spacing:0.02em;
+  }
+  .logo svg{width:34px;height:34px;flex-shrink:0;}
+  .logo .mark{color:var(--gold-soft);}
+  nav.links{display:flex;gap:38px;font-size:0.92rem;letter-spacing:0.03em;}
+  nav.links a{position:relative;padding:4px 0;color:var(--cream);opacity:0.85;transition:opacity .3s;}
+  nav.links a::after{
+    content:'';position:absolute;left:0;bottom:0;width:0;height:1px;
+    background:var(--gold);transition:width .35s ease;
+  }
+  nav.links a:hover{opacity:1;}
+  nav.links a:hover::after{width:100%;}
+  .nav-cta{
+    border:1px solid var(--gold);padding:9px 22px;border-radius:2px;
+    font-size:0.85rem;letter-spacing:0.05em;transition:all .3s ease;
+  }
+  .nav-cta:hover{background:var(--gold);color:var(--charcoal);}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:200;}
+  .burger span{width:26px;height:2px;background:var(--cream);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;height:100vh;min-height:640px;
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    background:url('https://loremflickr.com/1800/1000/indianfood,curry,spices') center/cover no-repeat;
+    transform:scale(1.08);
+    animation:heroZoom 18s ease-in-out infinite alternate;
+  }
+  @keyframes heroZoom{from{transform:scale(1.08);}to{transform:scale(1.18);}}
+  .hero-bg::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(18,13,10,0.55) 0%, rgba(18,13,10,0.75) 55%, var(--charcoal) 100%);
+  }
+  .hero-content{position:relative;z-index:2;max-width:820px;padding:0 24px;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:0.78rem;letter-spacing:0.35em;text-transform:uppercase;
+    color:var(--gold-soft);margin-bottom:26px;
+    opacity:0;animation:riseIn .9s ease .2s forwards;
+  }
+  .eyebrow::before,.eyebrow::after{content:'';width:28px;height:1px;background:var(--gold-soft);}
+  .hero h1{
+    font-size:clamp(3rem,8vw,6.2rem);line-height:0.98;
+    opacity:0;animation:riseIn 1s ease .4s forwards;
+  }
+  .hero h1 em{font-style:italic;color:var(--gold-soft);}
+  .hero p{
+    margin:26px auto 0;max-width:520px;font-size:1.08rem;line-height:1.7;color:rgba(243,233,216,0.82);
+    opacity:0;animation:riseIn 1s ease .6s forwards;
+  }
+  .hero-buttons{
+    margin-top:42px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;
+    opacity:0;animation:riseIn 1s ease .8s forwards;
+  }
+  @keyframes riseIn{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+  .btn{
+    display:inline-block;padding:15px 34px;border-radius:2px;font-size:0.9rem;
+    letter-spacing:0.06em;transition:all .35s ease;cursor:pointer;border:1px solid transparent;
+  }
+  .btn-solid{background:var(--brick);color:var(--cream);}
+  .btn-solid:hover{background:var(--gold);color:var(--charcoal);transform:translateY(-3px);}
+  .btn-outline{border-color:rgba(243,233,216,0.5);}
+  .btn-outline:hover{border-color:var(--gold);color:var(--gold-soft);transform:translateY(-3px);}
+
+  .scroll-cue{
+    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+    z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;
+    font-size:0.7rem;letter-spacing:0.2em;color:rgba(243,233,216,0.6);
+  }
+  .scroll-cue .line{width:1px;height:34px;background:linear-gradient(var(--gold-soft),transparent);animation:pulseLine 1.8s ease-in-out infinite;}
+  @keyframes pulseLine{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+  /* ---------- MARQUEE BANNER ---------- */
+  .marquee{
+    background:var(--gold);color:var(--charcoal);
+    padding:14px 0;overflow:hidden;white-space:nowrap;
+    border-top:1px solid var(--charcoal);border-bottom:1px solid var(--charcoal);
+  }
+  .marquee-track{display:inline-block;animation:scrollLeft 26s linear infinite;}
+  .marquee-track span{
+    display:inline-block;padding:0 28px;font-family:'Fraunces',serif;font-weight:600;
+    font-size:1.1rem;letter-spacing:0.02em;
+  }
+  .marquee-track span::after{content:'✦';margin-left:28px;font-size:0.9rem;color:var(--brick);}
+  @keyframes scrollLeft{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- SECTION generic ---------- */
+  section{padding:120px 6vw;}
+  .section-head{max-width:640px;margin-bottom:64px;}
+  .section-head .eyebrow{opacity:1;animation:none;}
+  .section-head h2{font-size:clamp(2.2rem,4.5vw,3.4rem);margin-top:14px;line-height:1.08;}
+  .section-head p{margin-top:18px;color:rgba(243,233,216,0.72);line-height:1.7;max-width:520px;}
+
+  .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- ABOUT ---------- */
+  .about{
+    display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;
+  }
+  .about-imgs{position:relative;height:480px;}
+  .about-imgs img{
+    position:absolute;border-radius:4px;object-fit:cover;box-shadow:0 30px 60px rgba(0,0,0,0.45);
+  }
+  .about-imgs .img-a{width:72%;height:88%;top:0;left:0;}
+  .about-imgs .img-b{
+    width:52%;height:56%;bottom:0;right:0;border:6px solid var(--charcoal);
+  }
+  .about-text p{line-height:1.85;color:rgba(243,233,216,0.78);margin-bottom:18px;}
+  .stat-row{display:flex;gap:50px;margin-top:40px;}
+  .stat-row div strong{display:block;font-family:'Fraunces',serif;font-size:2.2rem;color:var(--gold-soft);}
+  .stat-row div span{font-size:0.8rem;letter-spacing:0.05em;color:rgba(243,233,216,0.6);}
+
+  /* ---------- MENU ---------- */
+  .menu{background:var(--charcoal-2);}
+  .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:50px;}
+  .tab{
+    padding:10px 24px;border:1px solid var(--line);border-radius:30px;
+    font-size:0.85rem;letter-spacing:0.03em;cursor:pointer;transition:all .3s ease;
+    background:transparent;color:var(--cream);
+  }
+  .tab.active,.tab:hover{background:var(--gold);color:var(--charcoal);border-color:var(--gold);}
+  .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);}
+  .dish{position:relative;overflow:hidden;background:var(--charcoal-2);}
+  .dish.hidden{display:none;}
+  .dish-img{height:280px;overflow:hidden;}
+  .dish-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+  .dish:hover .dish-img img{transform:scale(1.09);}
+  .dish-info{padding:24px;}
+  .dish-info .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+  .dish-info h3{font-size:1.25rem;font-weight:500;}
+  .dish-info .price{color:var(--gold-soft);font-family:'Fraunces',serif;font-size:1.1rem;white-space:nowrap;}
+  .dish-info p{margin-top:8px;font-size:0.86rem;color:rgba(243,233,216,0.6);line-height:1.6;}
+  .spice{display:inline-block;margin-top:12px;font-size:0.72rem;letter-spacing:0.08em;color:var(--brick);}
+
+  /* ---------- GALLERY BANNER ---------- */
+  .gallery{padding:0;}
+  .gallery-track{display:flex;gap:2px;}
+  .gallery-track img{width:16.66%;height:340px;object-fit:cover;filter:grayscale(30%) brightness(0.85);transition:filter .5s ease, transform .5s ease;flex-shrink:0;}
+  .gallery-track img:hover{filter:grayscale(0%) brightness(1);transform:scale(1.03);z-index:2;}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testimonials{text-align:center;}
+  .quote-wrap{max-width:760px;margin:0 auto;min-height:220px;position:relative;}
+  .quote{
+    position:absolute;inset:0;opacity:0;transition:opacity .6s ease;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .quote.active{opacity:1;position:relative;}
+  .quote p{font-family:'Fraunces',serif;font-style:italic;font-size:1.5rem;line-height:1.5;color:var(--cream);}
+  .quote .who{margin-top:22px;font-size:0.82rem;letter-spacing:0.05em;color:var(--gold-soft);}
+  .dots{display:flex;gap:10px;justify-content:center;margin-top:36px;}
+  .dot{width:8px;height:8px;border-radius:50%;background:rgba(243,233,216,0.3);cursor:pointer;transition:background .3s;}
+  .dot.active{background:var(--gold);}
+
+  /* ---------- RESERVATION ---------- */
+  .reserve{
+    background:var(--brick);
+    position:relative;overflow:hidden;
+  }
+  .reserve::before{
+    content:'';position:absolute;inset:0;opacity:0.12;
+    background:url('https://loremflickr.com/1200/800/indianthali,curry') center/cover;
+  }
+  .reserve-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+  .reserve h2{font-size:clamp(2.2rem,4vw,3.2rem);}
+  .reserve p{margin-top:16px;color:rgba(243,233,216,0.85);line-height:1.7;max-width:420px;}
+  form{display:grid;gap:16px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  input,select{
+    width:100%;padding:14px 16px;background:rgba(26,20,16,0.35);
+    border:1px solid rgba(243,233,216,0.4);border-radius:2px;color:var(--cream);
+    font-family:'Work Sans',sans-serif;font-size:0.92rem;
+  }
+  input::placeholder{color:rgba(243,233,216,0.6);}
+  input:focus,select:focus{outline:2px solid var(--gold-soft);outline-offset:1px;}
+  select option{color:#111;}
+  .submit-btn{
+    background:var(--charcoal);color:var(--cream);padding:15px;border:none;
+    border-radius:2px;letter-spacing:0.06em;cursor:pointer;transition:all .3s ease;font-size:0.9rem;
+  }
+  .submit-btn:hover{background:var(--gold);color:var(--charcoal);}
+  .confirm-msg{
+    display:none;margin-top:14px;padding:14px 16px;background:var(--sage);color:var(--charcoal);
+    border-radius:2px;font-size:0.88rem;
+  }
+  .confirm-msg.show{display:block;animation:riseIn .5s ease forwards;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:70px 6vw 34px;border-top:1px solid var(--line);}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;}
+  footer h4{font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:18px;}
+  footer p,footer a{font-size:0.9rem;color:rgba(243,233,216,0.68);line-height:2;display:block;}
+  footer a:hover{color:var(--gold-soft);}
+  .footer-logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1.4rem;margin-bottom:14px;}
+  .footer-bottom{
+    margin-top:50px;padding-top:24px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-size:0.78rem;color:rgba(243,233,216,0.45);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:900px){
+    nav.links{display:none;}
+    .burger{display:flex;}
+    .about{grid-template-columns:1fr;}
+    .about-imgs{height:340px;margin-top:20px;}
+    .menu-grid{grid-template-columns:1fr 1fr;}
+    .reserve-inner{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:560px){
+    section{padding:90px 6vw;}
+    .menu-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .gallery-track img{height:220px;}
+    .footer-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo">
+    <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#1a1410"/><circle cx="50" cy="50" r="40" fill="none" stroke="#d4a017" stroke-width="2"/><path d="M50 20 C 60 35, 60 45, 50 55 C 40 45, 40 35, 50 20 Z" fill="#c2451d"/><circle cx="50" cy="65" r="6" fill="#d4a017"/></svg>
+    <span>Bhumik<span class="mark">.</span></span>
+  </div>
+  <nav class="links">
+    <a href="#about">Our Story</a>
+    <a href="#menu">Menu</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#reserve">Reserve</a>
+    <a href="#footer">Contact</a>
+  </nav>
+  <a href="#reserve" class="nav-cta">Book a Table</a>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Est. Since Generations</div>
+    <h1>Taste the soil<br><em>of the earth</em></h1>
+    <p>Bhumik brings slow-cooked, spice-layered Indian food to your table — recipes carried down from home kitchens, served with fire and warmth.</p>
+    <div class="hero-buttons">
+      <a href="#reserve" class="btn btn-solid">Reserve a Table</a>
+      <a href="#menu" class="btn btn-outline">View Menu</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><div class="line"></div></div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>Slow-Cooked Curries</span><span>Wood-Fired Tandoor</span><span>Fresh Ground Spices</span><span>Family Recipes</span>
+    <span>Slow-Cooked Curries</span><span>Wood-Fired Tandoor</span><span>Fresh Ground Spices</span><span>Family Recipes</span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-imgs reveal">
+    <img class="img-a" src="https://loremflickr.com/900/1100/chef,indiancurry,cooking" alt="Chef preparing curry">
+    <img class="img-b" src="https://loremflickr.com/700/800/platedfood,indiandish" alt="Plated Indian dish">
+  </div>
+  <div class="about-text reveal">
+    <div class="eyebrow" style="margin-bottom:16px;">Our Story</div>
+    <h2 style="font-size:clamp(2rem,4vw,2.8rem);margin-bottom:22px;">Rooted in the kitchen we grew up in</h2>
+    <p>Bhumik began at a wood stove in a small courtyard kitchen, where every meal was measured in patience, not minutes. Today, we still grind our spices fresh each morning and simmer our curries for hours — because a shortcut kitchen was never the plan.</p>
+    <p>Every dish that leaves our tandoor carries a story of the hands that shaped it, from our head chef's grandmother's recipe book to the plate in front of you.</p>
+    <div class="stat-row">
+      <div><strong>18+</strong><span>Years of Flavour</span></div>
+      <div><strong>60+</strong><span>Signature Dishes</span></div>
+      <div><strong>4.9</strong><span>Guest Rating</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="section-head reveal">
+    <div class="eyebrow">The Menu</div>
+    <h2>Dishes worth<br>the wait</h2>
+    <p>From smoky tandoor starters to slow-braised mains — every plate is cooked to order, never rushed.</p>
+  </div>
+
+  <div class="tabs reveal">
+    <button class="tab active" data-cat="all">All</button>
+    <button class="tab" data-cat="starters">Starters</button>
+    <button class="tab" data-cat="mains">Mains</button>
+    <button class="tab" data-cat="breads">Breads &amp; Rice</button>
+    <button class="tab" data-cat="desserts">Desserts</button>
+  </div>
+
+  <div class="menu-grid reveal" id="menuGrid">
+
+    <div class="dish" data-cat="starters">
+      <div class="dish-img"><img src="https://loremflickr.com/700/560/tandoorichicken,skewers" alt="Tandoori chicken skewers"></div>
+      <div class="dish-info">
+        <div class="row"><h3>Tandoori Seekh</h3><span class="price">₹320</span></div>
+        <p>Charcoal-grilled minced lamb skewers, smoked over open flame with crushed spices.</p>
+        <span class="spice">● ● ● Spicy</span>
+      </div>
+    </div>
+
+    <div class="dish" data-cat="mains">
+      <div class="dish-img"><img src="https://loremflickr.com/700/560/butterchicken,curry" alt="Butter chicken curry">
+      </div>
+      <div class="dish-info">
+        <div class="row"><h3>Bhumik Butter Chicken</h3><span class="price">₹380</span></div>
+        <p>Our signature — tandoor chicken simmered in tomato, butter and cream for six hours.</p>
+        <span class="spice">● ● ○ Medium</span>
+      </div>
+    </div>
+
+    <div class="dish" data-cat="mains">
+      <div class="dish-img"><img src="https://loremflickr.com/700/560/paneer,curry" alt="Paneer curry"></div>
+      <div class="dish-info">
+        <div class="row"><h3>Paneer Bhurji Masala</h3><span class="price">₹300</span></div>
+        <p>Crumbled cottage cheese tossed with onion, capsicum and a house masala blend.</p>
+        <span class="spice">● ○ ○ Mild</span>
+      </div>
+    </div>
+
+    <div class="dish" data-cat="breads">
+      <div class="dish-img"><img src="https://loremflickr.com/700/560/naan,bread" alt="Naan bread"></div>
+      <div class="dish-info">
+        <div class="row"><h3>Garlic Butter Naan</h3><span class="price">₹90</span></div>
+        <p>Hand-stretched dough, blistered in the tandoor and brushed with garlic butter.</p>
+        <span class="spice">● ○ ○ Mild</span>
+      </div>
+    </div>
+
+    <div class="dish" data-cat="breads">
+      <div class="dish-img"><img src="https://loremflickr.com/700/560/biryani,rice" alt="Biryani rice"></div>
+      <div class="dish-info">
+        <div class="row"><h3>Bhumik Dum Biryani</h3><span class="price">₹360</span></div>
+        <p>Layered basmati rice slow-cooked with saffron, whole spices and tender mutton.</p>
+        <span class="spice">● ● ○ Medium</span>
+      </div>
+    </div>
+
+    <div class="dish" data-cat="starters">
+      <div class="dish-img"><img src="https://loremflickr.com/700/560/samosa,indiansnack" alt="Samosa starter"></div>
+      <div class="dish-info">
+        <div class="row"><h3>Crisp Vegetable Samosa</h3><span class="price">₹150</span></div>
+        <p>Golden pastry filled with spiced potato and peas, served with tamarind chutney.</p>
+        <span class="spice">● ○ ○ Mild</span>
+      </div>
+    </div>
+
+    <div class="dish" data-cat="desserts">
+      <div class="dish-img"><img src="https://loremflickr.com/700/560/gulabjamun,dessert" alt="Gulab jamun dessert"></div>
+      <div class="dish-info">
+        <div class="row"><h3>Gulab Jamun</h3><span class="price">₹120</span></div>
+        <p>Warm milk dumplings soaked in cardamom-rose syrup, served with a scoop of rabri.</p>
+        <span class="spice">Sweet</span>
+      </div>
+    </div>
+
+    <div class="dish" data-cat="desserts">
+      <div class="dish-img"><img src="https://loremflickr.com/700/560/kulfi,dessert,indian" alt="Kulfi dessert"></div>
+      <div class="dish-info">
+        <div class="row"><h3>Saffron Pista Kulfi</h3><span class="price">₹140</span></div>
+        <p>Dense traditional Indian ice cream, slow-set with saffron and crushed pistachio.</p>
+        <span class="spice">Sweet</span>
+      </div>
+    </div>
+
+    <div class="dish" data-cat="mains">
+      <div class="dish-img"><img src="https://loremflickr.com/700/560/dalmakhani,lentils" alt="Dal makhani curry"></div>
+      <div class="dish-info">
+        <div class="row"><h3>Dal Bhumik</h3><span class="price">₹260</span></div>
+        <p>Black lentils simmered overnight on low coal, finished with cream and smoked butter.</p>
+        <span class="spice">● ○ ○ Mild</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="gallery-track">
+    <img src="https://loremflickr.com/500/700/foodspread,indian" alt="Food spread">
+    <img src="https://loremflickr.com/500/700/restauranttable,dining" alt="Restaurant table setting">
+    <img src="https://loremflickr.com/500/700/currydish,indianfood" alt="Curry dish close up">
+    <img src="https://loremflickr.com/500/700/samosa,platter" alt="Samosa plate">
+    <img src="https://loremflickr.com/500/700/biryani,closeup" alt="Biryani close up">
+    <img src="https://loremflickr.com/500/700/restaurant,interior" alt="Restaurant ambience">
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="section-head reveal" style="margin:0 auto 50px;text-align:center;">
+    <div class="eyebrow">Guests Say</div>
+    <h2>Loved by our regulars</h2>
+  </div>
+  <div class="quote-wrap reveal">
+    <div class="quote active">
+      <p>"The butter chicken tastes exactly like my grandmother's — I didn't think that was possible outside home."</p>
+      <div class="who">— Ananya R., Regular Guest</div>
+    </div>
+    <div class="quote">
+      <p>"Warm service, honest portions, and that tandoor smell hits you the second you walk in."</p>
+      <div class="who">— Rohit K., Food Blogger</div>
+    </div>
+    <div class="quote">
+      <p>"Booked for a birthday dinner, stayed for the biryani. Already planning our next visit."</p>
+      <div class="who">— Meera S., First-time Guest</div>
+    </div>
+  </div>
+  <div class="dots">
+    <div class="dot active" data-i="0"></div>
+    <div class="dot" data-i="1"></div>
+    <div class="dot" data-i="2"></div>
+  </div>
+</section>
+
+<section class="reserve" id="reserve">
+  <div class="reserve-inner">
+    <div class="reveal">
+      <div class="eyebrow">Reserve</div>
+      <h2>Save your table<br>tonight</h2>
+      <p>Walk-ins are always welcome, but a reservation guarantees your favourite corner by the tandoor.</p>
+    </div>
+    <form id="reserveForm" class="reveal">
+      <div class="form-row">
+        <input type="text" placeholder="Full name" required>
+        <input type="tel" placeholder="Phone number" required>
+      </div>
+      <div class="form-row">
+        <input type="date" required>
+        <select required>
+          <option value="" disabled selected>Party size</option>
+          <option>2 Guests</option>
+          <option>4 Guests</option>
+          <option>6 Guests</option>
+          <option>8+ Guests</option>
+        </select>
+      </div>
+      <input type="text" placeholder="Any special request (optional)">
+      <button type="submit" class="submit-btn">Confirm Reservation</button>
+      <div class="confirm-msg" id="confirmMsg">Thank you! Your table request has been received — we'll confirm shortly by phone.</div>
+    </form>
+  </div>
+</section>
+
+<footer id="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">
+        <svg width="30" height="30" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#1a1410"/><circle cx="50" cy="50" r="40" fill="none" stroke="#d4a017" stroke-width="2"/><path d="M50 20 C 60 35, 60 45, 50 55 C 40 45, 40 35, 50 20 Z" fill="#c2451d"/><circle cx="50" cy="65" r="6" fill="#d4a017"/></svg>
+        Bhumik
+      </div>
+      <p style="max-width:260px;">Authentic Indian kitchen, slow-cooked with recipes passed down through generations.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="#about">Our Story</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reserve">Reservations</a>
+    </div>
+    <div>
+      <h4>Visit</h4>
+      <p>Palace Road, NART Inside<br>Kolkata, West Bengal</p>
+      <p>Open 12 PM – 11 PM</p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="tel:+919741346833">+91 97413 46833</a>
+      <a href="mailto:sharankumargs2006@gmail.com">sharankumargs2006@gmail.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Bhumik Restaurant. All rights reserved.</span>
+    <span>Crafted with warmth &amp; spice.</span>
+  </div>
+</footer>
+
+<script>
+  // header scroll state
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.15});
+  revealEls.forEach(el => io.observe(el));
+
+  // menu tab filter
+  const tabs = document.querySelectorAll('.tab');
+  const dishes = document.querySelectorAll('.dish');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const cat = tab.dataset.cat;
+      dishes.forEach(d => {
+        d.classList.toggle('hidden', cat !== 'all' && d.dataset.cat !== cat);
+      });
+    });
+  });
+
+  // testimonial rotator
+  const quotes = document.querySelectorAll('.quote');
+  const dots = document.querySelectorAll('.dot');
+  let qi = 0;
+  function showQuote(i){
+    quotes.forEach(q => q.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    quotes[i].classList.add('active');
+    dots[i].classList.add('active');
+    qi = i;
+  }
+  dots.forEach(d => d.addEventListener('click', () => showQuote(+d.dataset.i)));
+  setInterval(() => showQuote((qi+1) % quotes.length), 5000);
+
+  // reservation form
+  const form = document.getElementById('reserveForm');
+  const confirmMsg = document.getElementById('confirmMsg');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    confirmMsg.classList.add('show');
+    form.reset();
+    setTimeout(() => confirmMsg.classList.remove('show'), 6000);
+  });
+
+  // mobile burger (simple toggle of nav as overlay)
+  const burger = document.getElementById('burger');
+  const navLinks = document.querySelector('nav.links');
+  burger.addEventListener('click', () => {
+    const open = navLinks.style.display === 'flex';
+    navLinks.style.display = open ? 'none' : 'flex';
+    navLinks.style.cssText += `
+      ${open ? '' : `
+      position:fixed; inset:0; flex-direction:column; align-items:center; justify-content:center;
+      background:#1a1410; font-size:1.4rem; gap:40px; display:flex; z-index:150;`}
+    `;
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.style.display = 'none';
+  }));
+
+  // graceful fallback if any food image is slow/unavailable
+  document.querySelectorAll('img').forEach(img => {
+    img.loading = 'lazy';
+    img.addEventListener('error', () => {
+      img.style.background = 'linear-gradient(135deg, #241c16, #3a2c1e)';
+    }, {once:true});
+  });
+</script>
+
+</body>
+</html>
